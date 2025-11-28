@@ -2,46 +2,1456 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Trekking Trails</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trekking Trails - Beach Camping Experiences in Alibaug and Revdanda">
+    <title>Trekking Trails - Beach Camping Adventures</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/images/logo.png">
+    <link rel="shortcut icon" type="image/jpeg" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c5530',
+                        secondary: '#4a90e2',
+                        accent: '#27ae60',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #eef9f0;
-            color: #1b4b2f;
+        /* Navbar Active Link Underline */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4a90e2, #27ae60);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-link.active {
+            color: #4a90e2;
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link-mobile.active {
+            color: #4a90e2;
+            font-weight: 600;
+            border-bottom-color: #4a90e2 !important;
+        }
+
+        /* Hamburger Animation */
+        #hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        #hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        #hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu Animation */
+        #mobileMenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+        }
+
+        #mobileMenu:not(.hidden) {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        /* Responsive Logo */
+        @media (max-width: 640px) {
+            nav h1 {
+                font-size: 0.9rem;
+            }
+
+            nav img {
+                height: 2.5rem;
+                width: 2.5rem;
+            }
+
+            nav {
+                padding: 0 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav h1 {
+                font-size: 0.85rem;
+            }
+
+            nav img {
+                height: 2rem;
+                width: 2rem;
+            }
+        }
+
+        /* Better Touch Targets */
+        .nav-link-mobile {
+            min-height: 48px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .welcome {
-            text-align: center;
-            padding: 24px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        #hamburger {
+            min-width: 44px;
+            min-height: 44px;
+            padding: 8px;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        h1 {
-            margin: 0 0 8px 0;
-            font-size: 2rem;
+        /* Smooth Mobile Menu Transitions */
+        @media (max-width: 767px) {
+            #mobileMenu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                z-index: 40;
+            }
         }
 
-        p {
-            margin: 0;
-            opacity: 0.9;
+        /* Prevent scroll when mobile menu is open */
+        body.menu-open {
+            overflow: hidden;
         }
     </style>
 </head>
 
-<body>
-    <div class="welcome">
-        <h1>Welcome to Trekking Trails</h1>
-        <p>Your next adventure starts here.</p>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#home"
+                    class="flex-shrink-0 flex items-center space-x-2 sm:space-x-3 hover:opacity-80 transition-opacity group">
+                    <img src="assets/images/logo.png" alt="Trekking Trails Logo"
+                        class="h-10 w-10 sm:h-12 sm:w-12 object-contain group-hover:scale-105 transition-transform rounded">
+                    <h1 class="text-lg sm:text-xl font-bold text-primary">Trekking Trails</h1>
+                </a>
+                <ul class="hidden md:flex space-x-8" id="navMenu">
+                    <li><a href="#home"
+                            class="nav-link text-gray-700 hover:text-secondary font-medium transition-all duration-300 relative py-2"
+                            data-section="home">Home</a>
+                    </li>
+                    <li><a href="#alibaug"
+                            class="nav-link text-gray-700 hover:text-secondary font-medium transition-all duration-300 relative py-2"
+                            data-section="alibaug">Alibaug Camping</a>
+                    </li>
+                    <li><a href="#pawna"
+                            class="nav-link text-gray-700 hover:text-secondary font-medium transition-all duration-300 relative py-2"
+                            data-section="pawna">Pawna Lake Camping</a>
+                    </li>
+                    <li><a href="#contact"
+                            class="nav-link text-gray-700 hover:text-secondary font-medium transition-all duration-300 relative py-2"
+                            data-section="contact">Contact</a></li>
+                </ul>
+                <button
+                    class="md:hidden flex flex-col justify-center items-center space-y-1.5 p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary"
+                    id="hamburger" aria-label="Toggle menu">
+                    <span class="w-6 h-0.5 bg-gray-700 transition-all duration-300"></span>
+                    <span class="w-6 h-0.5 bg-gray-700 transition-all duration-300"></span>
+                    <span class="w-6 h-0.5 bg-gray-700 transition-all duration-300"></span>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden bg-white border-t shadow-lg" id="mobileMenu">
+            <ul class="px-4 py-4 space-y-2">
+                <li><a href="#home"
+                        class="nav-link-mobile block text-gray-700 hover:text-secondary hover:bg-gray-50 font-medium transition-all duration-300 py-3 px-3 rounded-lg border-b-2 border-transparent hover:border-secondary"
+                        data-section="home">
+                        <span class="flex items-center">
+                            <span class="mr-2">🏠</span>
+                            <span>Home</span>
+                        </span>
+                    </a></li>
+                <li><a href="#alibaug"
+                        class="nav-link-mobile block text-gray-700 hover:text-secondary hover:bg-gray-50 font-medium transition-all duration-300 py-3 px-3 rounded-lg border-b-2 border-transparent hover:border-secondary"
+                        data-section="alibaug">
+                        <span class="flex items-center">
+                            <span class="mr-2">🏖️</span>
+                            <span>Alibaug Camping</span>
+                        </span>
+                    </a>
+                </li>
+                <li><a href="#pawna"
+                        class="nav-link-mobile block text-gray-700 hover:text-secondary hover:bg-gray-50 font-medium transition-all duration-300 py-3 px-3 rounded-lg border-b-2 border-transparent hover:border-secondary"
+                        data-section="pawna">
+                        <span class="flex items-center">
+                            <span class="mr-2">⛺</span>
+                            <span>Pawna Lake Camping</span>
+                        </span>
+                    </a>
+                </li>
+                <li><a href="#contact"
+                        class="nav-link-mobile block text-gray-700 hover:text-secondary hover:bg-gray-50 font-medium transition-all duration-300 py-3 px-3 rounded-lg border-b-2 border-transparent hover:border-secondary"
+                        data-section="contact">
+                        <span class="flex items-center">
+                            <span class="mr-2">📞</span>
+                            <span>Contact</span>
+                        </span>
+                    </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home"
+        class="relative h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-purple-600 bg-cover bg-center bg-scroll"
+        style="background-image: url('assets/images/Nagaon/Hero_image.jpg');">
+        <div class="relative z-10 text-center text-white px-4 max-w-4xl animate-fade-in">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 drop-shadow-2xl leading-tight">Adventure Awaits
+                at Trekking Trails</h1>
+            <p class="text-xl md:text-2xl lg:text-3xl mb-8 opacity-95 drop-shadow-lg">Experience Beachside & Lakeside
+                Camping Under the Stars</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#alibaug"
+                    class="inline-block bg-secondary hover:bg-blue-600 text-white font-semibold py-4 px-10 rounded-full transition-all transform hover:-translate-y-1 hover:scale-105 shadow-xl text-lg">Explore
+                    Camping</a>
+                <a href="#contact"
+                    class="inline-block bg-accent hover:bg-green-600 text-white font-semibold py-4 px-10 rounded-full transition-all transform hover:-translate-y-1 hover:scale-105 shadow-xl text-lg">Book
+                    Now</a>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Alibaug Beach Camping Section -->
+    <section id="alibaug" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold text-primary mb-4">Alibaug Beach Camping ⛺🌅</h2>
+                <p class="text-xl text-gray-600">Choose Your Perfect Beach Camping Experience</p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex bg-white rounded-lg p-1 shadow-lg">
+                    <button onclick="showTab('nagaon')" id="tab-nagaon"
+                        class="tab-button px-6 py-3 rounded-lg font-semibold transition-all bg-secondary text-white">
+                        Nagaon Beach Camping
+                    </button>
+                    <button onclick="showTab('revdanda')" id="tab-revdanda"
+                        class="tab-button px-6 py-3 rounded-lg font-semibold transition-all text-gray-700 hover:bg-gray-100">
+                        Revdanda Fort Camping
+                    </button>
+                </div>
+            </div>
+
+            <!-- Nagaon Beach Camping Tab Content -->
+            <div id="content-nagaon" class="tab-content">
+
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <!-- Main Hero Image -->
+                    <div class="h-[500px] md:h-[600px] overflow-hidden relative">
+                        <img src="./assets/images/Nagaon/IMG-20251116-WA0063.jpg" alt="Nagaon Beach Camping"
+                            class="w-full h-full object-cover"
+                            onerror="this.onerror=null; this.src='./assets/images/Nagaon/IMG-20251011-WA0025.jpg';">
+                        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                            <h3 class="text-3xl md:text-4xl font-bold mb-2">Nagaon Beach Camping</h3>
+                            <p class="text-lg md:text-xl opacity-90">Private Beach Experience & Stargazing</p>
+                        </div>
+                    </div>
+
+                    <!-- Image Gallery -->
+                    <div class="px-6 pt-6 pb-4 bg-gray-50">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                            <span class="text-3xl mr-2">📸</span> Photo Gallery
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            <img src="./assets/images/Nagaon/IMG-20251011-WA0025.jpg" alt="Nagaon Gallery 1"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Nagaon/IMG-20251011-WA0025.jpg', './assets/images/Nagaon/IMG-20251011-WA0027.jpg', './assets/images/Nagaon/IMG-20251029-WA0005.jpg', './assets/images/Nagaon/IMG-20251112-WA0009.jpg', './assets/images/Nagaon/IMG-20251116-WA0055.jpg', './assets/images/Nagaon/IMG-20251116-WA0058.jpg', './assets/images/Nagaon/IMG-20251116-WA0059.jpg', './assets/images/Nagaon/IMG-20251116-WA0063.jpg', './assets/images/Nagaon/IMG-20251116-WA0064.jpg', './assets/images/Nagaon/IMG-20251116-WA0067.jpg'], 0)">
+                            <img src="./assets/images/Nagaon/IMG-20251011-WA0027.jpg" alt="Nagaon Gallery 2"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Nagaon/IMG-20251011-WA0025.jpg', './assets/images/Nagaon/IMG-20251011-WA0027.jpg', './assets/images/Nagaon/IMG-20251029-WA0005.jpg', './assets/images/Nagaon/IMG-20251112-WA0009.jpg', './assets/images/Nagaon/IMG-20251116-WA0055.jpg', './assets/images/Nagaon/IMG-20251116-WA0058.jpg', './assets/images/Nagaon/IMG-20251116-WA0059.jpg', './assets/images/Nagaon/IMG-20251116-WA0063.jpg', './assets/images/Nagaon/IMG-20251116-WA0064.jpg', './assets/images/Nagaon/IMG-20251116-WA0067.jpg'], 1)">
+                            <img src="./assets/images/Nagaon/IMG-20251029-WA0005.jpg" alt="Nagaon Gallery 3"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Nagaon/IMG-20251011-WA0025.jpg', './assets/images/Nagaon/IMG-20251011-WA0027.jpg', './assets/images/Nagaon/IMG-20251029-WA0005.jpg', './assets/images/Nagaon/IMG-20251112-WA0009.jpg', './assets/images/Nagaon/IMG-20251116-WA0055.jpg', './assets/images/Nagaon/IMG-20251116-WA0058.jpg', './assets/images/Nagaon/IMG-20251116-WA0059.jpg', './assets/images/Nagaon/IMG-20251116-WA0063.jpg', './assets/images/Nagaon/IMG-20251116-WA0064.jpg', './assets/images/Nagaon/IMG-20251116-WA0067.jpg'], 2)">
+                            <img src="./assets/images/Nagaon/IMG-20251112-WA0009.jpg" alt="Nagaon Gallery 4"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Nagaon/IMG-20251011-WA0025.jpg', './assets/images/Nagaon/IMG-20251011-WA0027.jpg', './assets/images/Nagaon/IMG-20251029-WA0005.jpg', './assets/images/Nagaon/IMG-20251112-WA0009.jpg', './assets/images/Nagaon/IMG-20251116-WA0055.jpg', './assets/images/Nagaon/IMG-20251116-WA0058.jpg', './assets/images/Nagaon/IMG-20251116-WA0059.jpg', './assets/images/Nagaon/IMG-20251116-WA0063.jpg', './assets/images/Nagaon/IMG-20251116-WA0064.jpg', './assets/images/Nagaon/IMG-20251116-WA0067.jpg'], 3)">
+                            <img src="./assets/images/Nagaon/Hero_image.jpg" alt="Nagaon Gallery 5"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Nagaon/IMG-20251011-WA0025.jpg', './assets/images/Nagaon/IMG-20251011-WA0027.jpg', './assets/images/Nagaon/IMG-20251029-WA0005.jpg', './assets/images/Nagaon/IMG-20251112-WA0009.jpg', './assets/images/Nagaon/IMG-20251116-WA0055.jpg', './assets/images/Nagaon/IMG-20251116-WA0058.jpg', './assets/images/Nagaon/IMG-20251116-WA0059.jpg', './assets/images/Nagaon/IMG-20251116-WA0063.jpg', './assets/images/Nagaon/IMG-20251116-WA0064.jpg', './assets/images/Nagaon/IMG-20251116-WA0067.jpg'], 4)">
+                            <img src="./assets/images/Nagaon/IMG-20251116-WA0058.jpg" alt="Nagaon Gallery 6"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Nagaon/IMG-20251011-WA0025.jpg', './assets/images/Nagaon/IMG-20251011-WA0027.jpg', './assets/images/Nagaon/IMG-20251029-WA0005.jpg', './assets/images/Nagaon/IMG-20251112-WA0009.jpg', './assets/images/Nagaon/IMG-20251116-WA0055.jpg', './assets/images/Nagaon/IMG-20251116-WA0058.jpg', './assets/images/Nagaon/IMG-20251116-WA0059.jpg', './assets/images/Nagaon/IMG-20251116-WA0063.jpg', './assets/images/Nagaon/IMG-20251116-WA0064.jpg', './assets/images/Nagaon/IMG-20251116-WA0067.jpg'], 5)">
+                            <img src="./assets/images/Nagaon/IMG-20251116-WA0059.jpg" alt="Nagaon Gallery 7"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Nagaon/IMG-20251011-WA0025.jpg', './assets/images/Nagaon/IMG-20251011-WA0027.jpg', './assets/images/Nagaon/IMG-20251029-WA0005.jpg', './assets/images/Nagaon/IMG-20251112-WA0009.jpg', './assets/images/Nagaon/IMG-20251116-WA0055.jpg', './assets/images/Nagaon/IMG-20251116-WA0058.jpg', './assets/images/Nagaon/IMG-20251116-WA0059.jpg', './assets/images/Nagaon/IMG-20251116-WA0063.jpg', './assets/images/Nagaon/IMG-20251116-WA0064.jpg', './assets/images/Nagaon/IMG-20251116-WA0067.jpg'], 6)">
+                            <img src="./assets/images/Nagaon/IMG-20251116-WA0063.jpg" alt="Nagaon Gallery 8"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Nagaon/IMG-20251011-WA0025.jpg', './assets/images/Nagaon/IMG-20251011-WA0027.jpg', './assets/images/Nagaon/IMG-20251029-WA0005.jpg', './assets/images/Nagaon/IMG-20251112-WA0009.jpg', './assets/images/Nagaon/IMG-20251116-WA0055.jpg', './assets/images/Nagaon/IMG-20251116-WA0058.jpg', './assets/images/Nagaon/IMG-20251116-WA0059.jpg', './assets/images/Nagaon/IMG-20251116-WA0063.jpg', './assets/images/Nagaon/IMG-20251116-WA0064.jpg', './assets/images/Nagaon/IMG-20251116-WA0067.jpg'], 7)">
+                            <img src="./assets/images/Nagaon/IMG-20251116-WA0064.jpg" alt="Nagaon Gallery 9"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Nagaon/IMG-20251011-WA0025.jpg', './assets/images/Nagaon/IMG-20251011-WA0027.jpg', './assets/images/Nagaon/IMG-20251029-WA0005.jpg', './assets/images/Nagaon/IMG-20251112-WA0009.jpg', './assets/images/Nagaon/IMG-20251116-WA0055.jpg', './assets/images/Nagaon/IMG-20251116-WA0058.jpg', './assets/images/Nagaon/IMG-20251116-WA0059.jpg', './assets/images/Nagaon/IMG-20251116-WA0063.jpg', './assets/images/Nagaon/IMG-20251116-WA0064.jpg', './assets/images/Nagaon/IMG-20251116-WA0067.jpg'], 8)">
+                            <img src="./assets/images/Nagaon/IMG-20251116-WA0067.jpg" alt="Nagaon Gallery 10"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Nagaon/IMG-20251011-WA0025.jpg', './assets/images/Nagaon/IMG-20251011-WA0027.jpg', './assets/images/Nagaon/IMG-20251029-WA0005.jpg', './assets/images/Nagaon/IMG-20251112-WA0009.jpg', './assets/images/Nagaon/IMG-20251116-WA0055.jpg', './assets/images/Nagaon/IMG-20251116-WA0058.jpg', './assets/images/Nagaon/IMG-20251116-WA0059.jpg', './assets/images/Nagaon/IMG-20251116-WA0063.jpg', './assets/images/Nagaon/IMG-20251116-WA0064.jpg', './assets/images/Nagaon/IMG-20251116-WA0067.jpg'], 9)">
+                        </div>
+                    </div>
+
+                    <div class="p-6 md:p-10">
+                        <!-- Location Info -->
+                        <div class="mb-8 text-center">
+                            <p class="text-lg text-gray-600"><strong>Location:</strong> Nagaon Beach Camping {Directly
+                                see to Sea View Beach}</p>
+                        </div>
+
+                        <!-- Rates Section (Collapsible) -->
+                        <div class="mb-6">
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                                <button onclick="toggleAccordion('nagaon-rates')"
+                                    class="accordion-header w-full flex items-center justify-between p-6 text-left bg-gradient-to-r from-primary to-secondary text-white hover:from-secondary hover:to-primary transition-all">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">💰</span>
+                                        <h4 class="text-xl font-bold">Rates</h4>
+                                    </div>
+                                    <span
+                                        class="accordion-icon text-2xl font-bold transition-transform duration-300">+</span>
+                                </button>
+                                <div id="nagaon-rates-content"
+                                    class="accordion-content hidden overflow-hidden transition-all duration-300">
+                                    <div class="p-6 bg-gray-50">
+                                        <div
+                                            class="bg-gradient-to-r from-secondary to-accent text-white p-6 rounded-xl text-center max-w-md mx-auto">
+                                            <span class="block text-sm opacity-90 mb-2">💰 Cost</span>
+                                            <span class="block text-4xl font-bold mb-2">₹999/-</span>
+                                            <span class="block text-sm opacity-90">(lowest in the market)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Camping Itinerary (Collapsible) -->
+                        <div class="mb-6">
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                                <button onclick="toggleAccordion('nagaon-itinerary')"
+                                    class="accordion-header w-full flex items-center justify-between p-6 text-left bg-gradient-to-r from-accent to-green-500 text-white hover:from-green-500 hover:to-accent transition-all">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">🏕️</span>
+                                        <h4 class="text-xl font-bold">Camping Itinerary</h4>
+                                    </div>
+                                    <span
+                                        class="accordion-icon text-2xl font-bold transition-transform duration-300">+</span>
+                                </button>
+                                <div id="nagaon-itinerary-content"
+                                    class="accordion-content hidden overflow-hidden transition-all duration-300">
+                                    <div class="p-6 bg-gray-50">
+                                        <h3 class="text-3xl font-bold text-primary mb-6 text-center">🏕️ Camping
+                                            Itinerary</h3>
+
+                                        <!-- Day 1 -->
+                                        <div
+                                            class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl mb-6 border-l-4 border-secondary">
+                                            <h4 class="text-2xl font-bold text-secondary mb-6 flex items-center">
+                                                <span class="mr-2">📅</span> Day 1
+                                            </h4>
+                                            <div class="space-y-4">
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">⏰</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">04:00 PM - Reach the
+                                                            campsite
+                                                        </div>
+                                                        <div class="text-gray-600 text-sm">Have refreshments and snacks
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🎮</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">05:00 PM - Icebreaker
+                                                            round</div>
+                                                        <div class="text-gray-600 text-sm">Settle down and enjoy the
+                                                            sunset from the
+                                                            beachside camp. Enjoy games, click pictures with the
+                                                            beautiful nature
+                                                            around or just relax and unwind in hammocks until sunset.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🍢</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">07:00 PM - Enjoy the
+                                                            experience of
+                                                            grilling BBQ</div>
+                                                        <div class="text-gray-600 text-sm">By yourself (Veg/Non-veg)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🎶</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">08:00 PM - Move and
+                                                            groove to the
+                                                            beats of DJ</div>
+                                                        <div class="text-gray-600 text-sm">Dance to the energetic beats
+                                                            of DJ music and let loose on the beachside. Time to party!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🍽</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">09:30 PM - Unlimited
+                                                            delicious
+                                                            dinner</div>
+                                                        <div class="text-gray-600 text-sm">Veg/Non-veg/Jain prepared by
+                                                            locals with
+                                                            traditional indian style cooking</div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🔥</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">10:00 PM - Campfire by
+                                                            the beach
+                                                        </div>
+                                                        <div class="text-gray-600 text-sm">Finally, the most awaited
+                                                            moment; to sit
+                                                            around a campfire by the beach, and live this unique
+                                                            experience
+                                                            accompanied by loads of fantastic memories! End the day at
+                                                            beach under
+                                                            the open sky & enjoy sleeping in a tent.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Day 2 -->
+                                        <div
+                                            class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border-l-4 border-accent">
+                                            <h4 class="text-2xl font-bold text-accent mb-6 flex items-center">
+                                                <span class="mr-2">📅</span> Day 2
+                                            </h4>
+                                            <div class="space-y-4">
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🌄</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">07:00 AM - Wake up and
+                                                            enjoy the
+                                                            chilled breeze by the sea</div>
+                                                        <div class="text-gray-600 text-sm">Freshen up and have breakfast
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🏖️</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">08:00 AM - 11:00 AM -
+                                                            Enjoy the
+                                                            pleasant morning at the beachside</div>
+                                                        <div class="text-gray-600 text-sm">Play games, take a dip into
+                                                            the sea</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-center text-sm text-gray-500 mt-4 italic">Note: Above mentioned
+                                            timings and
+                                            amenities are tentative. They may fluctuate or cancelled depending on
+                                            various factors.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revdanda Fort Camping Tab Content -->
+            <div id="content-revdanda" class="tab-content hidden">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <!-- Main Hero Image -->
+                    <div class="h-[500px] md:h-[600px] overflow-hidden relative">
+                        <img src="assets/images/Revanda/IMG-20251127-WA0030.jpg" alt="Revdanda Fort Camping"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                            onerror="this.onerror=null; this.src='assets/images/Revanda/IMG-20251127-WA0031.jpg';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                            <h3 class="text-3xl md:text-4xl font-bold mb-2">Revdanda Fort Camping</h3>
+                            <p class="text-lg md:text-xl opacity-90">Beachside Camping with Historic Fort Visit</p>
+                        </div>
+                    </div>
+
+                    <!-- Image Gallery -->
+                    <div class="px-6 pt-6 pb-4 bg-gray-50">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                            <span class="text-3xl mr-2">📸</span> Photo Gallery
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            <img src="./assets/images/Revanda/IMG-20251127-WA0031.jpg" alt="Revdanda Gallery 1"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Revanda/IMG-20251127-WA0031.jpg', './assets/images/Revanda/IMG-20251127-WA0032.jpg', './assets/images/Revanda/IMG-20251127-WA0033.jpg', './assets/images/Revanda/IMG-20251127-WA0034.jpg', './assets/images/Revanda/IMG-20251127-WA0035.jpg', './assets/images/Revanda/IMG-20251127-WA0036.jpg', './assets/images/Revanda/IMG-20251127-WA0037.jpg', './assets/images/Revanda/IMG-20251127-WA0038.jpg', './assets/images/Revanda/IMG-20251127-WA0039.jpg', './assets/images/Revanda/IMG-20251127-WA0040.jpg'], 0)">
+                            <img src="./assets/images/Revanda/IMG-20251127-WA0032.jpg" alt="Revdanda Gallery 2"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Revanda/IMG-20251127-WA0031.jpg', './assets/images/Revanda/IMG-20251127-WA0032.jpg', './assets/images/Revanda/IMG-20251127-WA0033.jpg', './assets/images/Revanda/IMG-20251127-WA0034.jpg', './assets/images/Revanda/IMG-20251127-WA0035.jpg', './assets/images/Revanda/IMG-20251127-WA0036.jpg', './assets/images/Revanda/IMG-20251127-WA0037.jpg', './assets/images/Revanda/IMG-20251127-WA0038.jpg', './assets/images/Revanda/IMG-20251127-WA0039.jpg', './assets/images/Revanda/IMG-20251127-WA0040.jpg'], 1)">
+                            <img src="./assets/images/Revanda/IMG-20251127-WA0033.jpg" alt="Revdanda Gallery 3"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Revanda/IMG-20251127-WA0031.jpg', './assets/images/Revanda/IMG-20251127-WA0032.jpg', './assets/images/Revanda/IMG-20251127-WA0033.jpg', './assets/images/Revanda/IMG-20251127-WA0034.jpg', './assets/images/Revanda/IMG-20251127-WA0035.jpg', './assets/images/Revanda/IMG-20251127-WA0036.jpg', './assets/images/Revanda/IMG-20251127-WA0037.jpg', './assets/images/Revanda/IMG-20251127-WA0038.jpg', './assets/images/Revanda/IMG-20251127-WA0039.jpg', './assets/images/Revanda/IMG-20251127-WA0040.jpg'], 2)">
+                            <img src="./assets/images/Revanda/IMG-20251127-WA0034.jpg" alt="Revdanda Gallery 4"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Revanda/IMG-20251127-WA0031.jpg', './assets/images/Revanda/IMG-20251127-WA0032.jpg', './assets/images/Revanda/IMG-20251127-WA0033.jpg', './assets/images/Revanda/IMG-20251127-WA0034.jpg', './assets/images/Revanda/IMG-20251127-WA0035.jpg', './assets/images/Revanda/IMG-20251127-WA0036.jpg', './assets/images/Revanda/IMG-20251127-WA0037.jpg', './assets/images/Revanda/IMG-20251127-WA0038.jpg', './assets/images/Revanda/IMG-20251127-WA0039.jpg', './assets/images/Revanda/IMG-20251127-WA0040.jpg'], 3)">
+                            <img src="./assets/images/Revanda/IMG-20251127-WA0035.jpg" alt="Revdanda Gallery 5"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Revanda/IMG-20251127-WA0031.jpg', './assets/images/Revanda/IMG-20251127-WA0032.jpg', './assets/images/Revanda/IMG-20251127-WA0033.jpg', './assets/images/Revanda/IMG-20251127-WA0034.jpg', './assets/images/Revanda/IMG-20251127-WA0035.jpg', './assets/images/Revanda/IMG-20251127-WA0036.jpg', './assets/images/Revanda/IMG-20251127-WA0037.jpg', './assets/images/Revanda/IMG-20251127-WA0038.jpg', './assets/images/Revanda/IMG-20251127-WA0039.jpg', './assets/images/Revanda/IMG-20251127-WA0040.jpg'], 4)">
+                            <img src="./assets/images/Revanda/IMG-20251127-WA0036.jpg" alt="Revdanda Gallery 6"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Revanda/IMG-20251127-WA0031.jpg', './assets/images/Revanda/IMG-20251127-WA0032.jpg', './assets/images/Revanda/IMG-20251127-WA0033.jpg', './assets/images/Revanda/IMG-20251127-WA0034.jpg', './assets/images/Revanda/IMG-20251127-WA0035.jpg', './assets/images/Revanda/IMG-20251127-WA0036.jpg', './assets/images/Revanda/IMG-20251127-WA0037.jpg', './assets/images/Revanda/IMG-20251127-WA0038.jpg', './assets/images/Revanda/IMG-20251127-WA0039.jpg', './assets/images/Revanda/IMG-20251127-WA0040.jpg'], 5)">
+                            <img src="./assets/images/Revanda/IMG-20251127-WA0037.jpg" alt="Revdanda Gallery 7"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Revanda/IMG-20251127-WA0031.jpg', './assets/images/Revanda/IMG-20251127-WA0032.jpg', './assets/images/Revanda/IMG-20251127-WA0033.jpg', './assets/images/Revanda/IMG-20251127-WA0034.jpg', './assets/images/Revanda/IMG-20251127-WA0035.jpg', './assets/images/Revanda/IMG-20251127-WA0036.jpg', './assets/images/Revanda/IMG-20251127-WA0037.jpg', './assets/images/Revanda/IMG-20251127-WA0038.jpg', './assets/images/Revanda/IMG-20251127-WA0039.jpg', './assets/images/Revanda/IMG-20251127-WA0040.jpg'], 6)">
+                            <img src="./assets/images/Revanda/IMG-20251127-WA0038.jpg" alt="Revdanda Gallery 8"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Revanda/IMG-20251127-WA0031.jpg', './assets/images/Revanda/IMG-20251127-WA0032.jpg', './assets/images/Revanda/IMG-20251127-WA0033.jpg', './assets/images/Revanda/IMG-20251127-WA0034.jpg', './assets/images/Revanda/IMG-20251127-WA0035.jpg', './assets/images/Revanda/IMG-20251127-WA0036.jpg', './assets/images/Revanda/IMG-20251127-WA0037.jpg', './assets/images/Revanda/IMG-20251127-WA0038.jpg', './assets/images/Revanda/IMG-20251127-WA0039.jpg', './assets/images/Revanda/IMG-20251127-WA0040.jpg'], 7)">
+                            <img src="./assets/images/Revanda/IMG-20251127-WA0039.jpg" alt="Revdanda Gallery 9"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Revanda/IMG-20251127-WA0031.jpg', './assets/images/Revanda/IMG-20251127-WA0032.jpg', './assets/images/Revanda/IMG-20251127-WA0033.jpg', './assets/images/Revanda/IMG-20251127-WA0034.jpg', './assets/images/Revanda/IMG-20251127-WA0035.jpg', './assets/images/Revanda/IMG-20251127-WA0036.jpg', './assets/images/Revanda/IMG-20251127-WA0037.jpg', './assets/images/Revanda/IMG-20251127-WA0038.jpg', './assets/images/Revanda/IMG-20251127-WA0039.jpg', './assets/images/Revanda/IMG-20251127-WA0040.jpg'], 8)">
+                            <img src="./assets/images/Revanda/IMG-20251127-WA0040.jpg" alt="Revdanda Gallery 10"
+                                class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                                onclick="openImageModal(['./assets/images/Revanda/IMG-20251127-WA0031.jpg', './assets/images/Revanda/IMG-20251127-WA0032.jpg', './assets/images/Revanda/IMG-20251127-WA0033.jpg', './assets/images/Revanda/IMG-20251127-WA0034.jpg', './assets/images/Revanda/IMG-20251127-WA0035.jpg', './assets/images/Revanda/IMG-20251127-WA0036.jpg', './assets/images/Revanda/IMG-20251127-WA0037.jpg', './assets/images/Revanda/IMG-20251127-WA0038.jpg', './assets/images/Revanda/IMG-20251127-WA0039.jpg', './assets/images/Revanda/IMG-20251127-WA0040.jpg'], 9)">
+                        </div>
+                    </div>
+
+                    <div class="p-6 md:p-10">
+                        <!-- Rates Section (Collapsible) -->
+                        <div class="mb-6">
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                                <button onclick="toggleAccordion('revdanda-rates')"
+                                    class="accordion-header w-full flex items-center justify-between p-6 text-left bg-gradient-to-r from-primary to-secondary text-white hover:from-secondary hover:to-primary transition-all">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">💰</span>
+                                        <h4 class="text-xl font-bold">Rates</h4>
+                                    </div>
+                                    <span
+                                        class="accordion-icon text-2xl font-bold transition-transform duration-300">+</span>
+                                </button>
+                                <div id="revdanda-rates-content"
+                                    class="accordion-content hidden overflow-hidden transition-all duration-300">
+                                    <div class="p-6 bg-gray-50">
+                                        <div
+                                            class="bg-gradient-to-r from-secondary to-accent text-white p-6 rounded-xl text-center max-w-md mx-auto">
+                                            <span class="block text-sm opacity-90 mb-2">💰 Event Fee</span>
+                                            <span class="block text-4xl font-bold mb-2">₹999/-</span>
+                                            <span class="block text-sm opacity-90">per person</span>
+                                            <span class="block text-sm opacity-90 mt-2">Date: All day</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Camping Itinerary (Collapsible) -->
+                        <div class="mb-6">
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                                <button onclick="toggleAccordion('revdanda-itinerary')"
+                                    class="accordion-header w-full flex items-center justify-between p-6 text-left bg-gradient-to-r from-accent to-green-500 text-white hover:from-green-500 hover:to-accent transition-all">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">🏕️</span>
+                                        <h4 class="text-xl font-bold">Camping Itinerary</h4>
+                                    </div>
+                                    <span
+                                        class="accordion-icon text-2xl font-bold transition-transform duration-300">+</span>
+                                </button>
+                                <div id="revdanda-itinerary-content"
+                                    class="accordion-content hidden overflow-hidden transition-all duration-300">
+                                    <div class="p-6 bg-gray-50">
+                                        <h3 class="text-3xl font-bold text-primary mb-6 text-center">🏕️ Camping
+                                            Itinerary</h3>
+
+                                        <!-- Day 1 -->
+                                        <div
+                                            class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl mb-6 border-l-4 border-secondary">
+                                            <h4 class="text-2xl font-bold text-secondary mb-6 flex items-center">
+                                                <span class="mr-2">📅</span> Day 1
+                                            </h4>
+                                            <div class="space-y-4">
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">⏰</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">04:00 PM - Check In At
+                                                            Campsite
+                                                        </div>
+                                                        <div class="text-gray-600 text-sm">Arrive at the campsite and
+                                                            settle into your beachside accommodation. Get ready for an
+                                                            amazing camping experience!</div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🍵</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">06:00 PM - Evening
+                                                            High Tea +
+                                                            Special Misal Paav</div>
+                                                        <div class="text-gray-600 text-sm">Enjoy a refreshing evening
+                                                            tea along with delicious Misal Paav, a local Maharashtrian
+                                                            specialty.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🌇</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">06:30 PM - Enjoying
+                                                            Sunset +
+                                                            Visiting Revdanda Fort</div>
+                                                        <div class="text-gray-600 text-sm">Witness the breathtaking
+                                                            sunset from the beach and explore the historic Revdanda
+                                                            Fort, a perfect blend of nature and history.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🍢</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">08:00 PM - Barbeque
+                                                            Limited</div>
+                                                        <div class="text-gray-600 text-sm">Grill your favorite BBQ items
+                                                            (Veg/Non-veg) and enjoy the smoky flavors by the beachside.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🎶</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">08:30 PM - DJ Music &
+                                                            Fun Games
+                                                        </div>
+                                                        <div class="text-gray-600 text-sm">Dance to the beats of DJ
+                                                            music and participate in fun games with fellow campers. Let
+                                                            the fun begin!</div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🍱</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">10:00 PM - Unlimited
+                                                            Dinner</div>
+                                                        <div class="text-gray-600 text-sm">Enjoy unlimited delicious
+                                                            dinner (Veg/Non-Veg) prepared by locals with traditional
+                                                            Indian style cooking.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🎸</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">11:00 PM - Live Music
+                                                        </div>
+                                                        <div class="text-gray-600 text-sm">Experience live music
+                                                            performance (Weekend Only). Sing along and enjoy the musical
+                                                            evening under the stars.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🎥</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">12:00 PM - Movie
+                                                            Screening</div>
+                                                        <div class="text-gray-600 text-sm">Watch a movie on the big
+                                                            screen by the beachside. A perfect way to end the day!</div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">⛺</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">Night Stay In Tent
+                                                        </div>
+                                                        <div class="text-gray-600 text-sm">Sleep under the open sky in
+                                                            comfortable tents with mattresses and blankets. Experience
+                                                            the magic of beachside camping!</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Day 2 -->
+                                        <div
+                                            class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border-l-4 border-accent">
+                                            <h4 class="text-2xl font-bold text-accent mb-6 flex items-center">
+                                                <span class="mr-2">📅</span> Day 2
+                                            </h4>
+                                            <div class="space-y-4">
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🍜</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">08:00 AM - Morning
+                                                            Breakfast</div>
+                                                        <div class="text-gray-600 text-sm">Start your day with a
+                                                            delicious breakfast including tea and poha. Energize
+                                                            yourself for the day ahead!</div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                    <div class="text-2xl">🥰</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-gray-800 mb-1">11:00 AM - Checkout
+                                                        </div>
+                                                        <div class="text-gray-600 text-sm">Checkout with lovely memories
+                                                            of your amazing beachside camping experience. Take back
+                                                            unforgettable moments!</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-center text-sm text-gray-500 mt-4 italic">Note: Above mentioned
+                                            timings and
+                                            amenities are tentative. They may fluctuate or cancelled depending on
+                                            various factors.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Information Sections -->
+            <div class="mt-12 space-y-8">
+                <!-- Highlights Section -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 border-2 border-gray-200">
+                    <h3 class="text-3xl font-bold text-primary mb-6 text-center">📍 Highlights</h3>
+                    <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div
+                                class="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl border-l-4 border-secondary">
+                                <div class="text-2xl mb-2">🏖️</div>
+                                <h4 class="font-semibold text-gray-800">Beach Camping</h4>
+                                <p class="text-sm text-gray-600">Directly see to Sea View beach</p>
+                            </div>
+                            <div
+                                class="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-xl border-l-4 border-accent">
+                                <div class="text-2xl mb-2">🎸</div>
+                                <h4 class="font-semibold text-gray-800">Live Music</h4>
+                                <p class="text-sm text-gray-600">Saturday Night only</p>
+                            </div>
+                            <div
+                                class="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-xl border-l-4 border-purple-500">
+                                <div class="text-2xl mb-2">🔥</div>
+                                <h4 class="font-semibold text-gray-800">Campfire</h4>
+                                <p class="text-sm text-gray-600">Music & Bonfire</p>
+                            </div>
+                            <div
+                                class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-xl border-l-4 border-orange-500">
+                                <div class="text-2xl mb-2">🎮</div>
+                                <h4 class="font-semibold text-gray-800">Indoor & Outdoor Games</h4>
+                                <p class="text-sm text-gray-600">Fun activities for everyone</p>
+                            </div>
+                            <div
+                                class="bg-gradient-to-br from-pink-50 to-pink-100 p-4 rounded-xl border-l-4 border-pink-500">
+                                <div class="text-2xl mb-2">🎶</div>
+                                <h4 class="font-semibold text-gray-800">DJ Music</h4>
+                                <p class="text-sm text-gray-600">Saturday night</p>
+                            </div>
+                            <div
+                                class="bg-gradient-to-br from-teal-50 to-teal-100 p-4 rounded-xl border-l-4 border-teal-500">
+                                <div class="text-2xl mb-2">🔥</div>
+                                <h4 class="font-semibold text-gray-800">Bonfire</h4>
+                                <p class="text-sm text-gray-600">Cozy evening around the fire</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Amenities Section -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 border-2 border-gray-200">
+                    <h3 class="text-3xl font-bold text-primary mb-6 text-center">✨ Amenities</h3>
+                    <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <div
+                                class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                Security
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                Blankets
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                Parking
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                Tent Stay
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                Mineral Water
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                Washroom (Western)
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                First Aid
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Includes/Excludes Section -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 border-2 border-gray-200">
+                    <h3 class="text-3xl font-bold text-primary mb-6 text-center">✅ Includes / Excludes</h3>
+                    <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="bg-white p-6 rounded-lg border-2 border-gray-200">
+                                <h4 class="text-xl font-semibold text-secondary mb-4">✅ What is included in cost?
+                                </h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Unlimited Dinner</span>
+                                    </li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>BBQ</span></li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Evening snack</span>
+                                    </li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Tent stay</span></li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Mattress &
+                                            pillow</span></li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Washroom</span></li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Changing room</span>
+                                    </li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Movie Screen</span>
+                                    </li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Parking</span></li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Charging
+                                            Facility</span></li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Music system</span>
+                                    </li>
+                                    <li class="flex items-start"><span
+                                            class="text-accent mr-2 font-bold">✓</span><span>Next day
+                                            breakfast</span></li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg border-2 border-gray-200">
+                                <h4 class="text-xl font-semibold text-red-600 mb-4">❌ What is not included in cost?
+                                </h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start"><span
+                                            class="text-red-500 mr-2 font-bold">✗</span><span>Transport
+                                            facility</span></li>
+                                    <li class="flex items-start"><span
+                                            class="text-red-500 mr-2 font-bold">✗</span><span>All kinds of Extra
+                                            Meals / Drinks Ordered</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Things to Carry Section -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 border-2 border-gray-200">
+                    <h3 class="text-3xl font-bold text-primary mb-6 text-center">🎒 Things to Carry</h3>
+                    <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div
+                                class="flex items-start gap-3 bg-white p-4 rounded-lg border-2 border-gray-200 border-l-4 border-l-accent hover:shadow-md transition-all">
+                                <span class="text-accent mr-2 font-bold text-xl">✓</span>
+                                <span class="text-gray-800 font-medium">Extra clothes</span>
+                            </div>
+                            <div
+                                class="flex items-start gap-3 bg-white p-4 rounded-lg border-2 border-gray-200 border-l-4 border-l-accent hover:shadow-md transition-all">
+                                <span class="text-accent mr-2 font-bold text-xl">✓</span>
+                                <span class="text-gray-800 font-medium">Personal medicine</span>
+                            </div>
+                            <div
+                                class="flex items-start gap-3 bg-white p-4 rounded-lg border-2 border-gray-200 border-l-4 border-l-accent hover:shadow-md transition-all">
+                                <span class="text-accent mr-2 font-bold text-xl">✓</span>
+                                <span class="text-gray-800 font-medium">Hard drink (on your choice)</span>
+                            </div>
+                            <div
+                                class="flex items-start gap-3 bg-white p-4 rounded-lg border-2 border-gray-200 border-l-4 border-l-accent hover:shadow-md transition-all">
+                                <span class="text-accent mr-2 font-bold text-xl">✓</span>
+                                <span class="text-gray-800 font-medium">Extra blanket</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     </div>
+    </div>
+    </div>
+    </section>
+
+    <!-- Pawna Lake Camping Section -->
+    <section id="pawna" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold text-primary mb-4">Pawna Lake Camping ⛺🌊</h2>
+                <p class="text-xl text-gray-600">Lakeside Camping Experience & Adventure</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <!-- Main Hero Image -->
+                <div class="h-[500px] md:h-[600px] overflow-hidden relative">
+                    <img src="assets/images/Pawana/IMG-20251127-WA0048.jpg" alt="Pawna Lake Camping"
+                        class="w-full h-full object-cover"
+                        onerror="this.onerror=null; this.src='assets/images/Pawana/IMG-20251127-WA0049.jpg';">
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                        <h3 class="text-3xl md:text-4xl font-bold mb-2">Pawna Lake Camping</h3>
+                        <p class="text-lg md:text-xl opacity-90">Lakeside Camping Experience & Adventure</p>
+                    </div>
+                </div>
+
+                <!-- Image Gallery -->
+                <div class="px-6 pt-6 pb-4 bg-gray-50">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="text-3xl mr-2">📸</span> Photo Gallery
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <img src="assets/images/Pawana/IMG-20251127-WA0048.jpg" alt="Pawna Gallery 1"
+                            class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                            onclick="openImageModal(['assets/images/Pawana/IMG-20251127-WA0048.jpg', 'assets/images/Pawana/IMG-20251127-WA0049.jpg', 'assets/images/Pawana/IMG-20251127-WA0050.jpg', 'assets/images/Pawana/IMG-20251127-WA0051.jpg', 'assets/images/Pawana/IMG-20251127-WA0052.jpg', 'assets/images/Pawana/IMG-20251127-WA0053.jpg', 'assets/images/Pawana/IMG-20251127-WA0054.jpg', 'assets/images/Pawana/IMG-20251127-WA0055.jpg', 'assets/images/Pawana/IMG-20251127-WA0056.jpg', 'assets/images/Pawana/IMG-20251127-WA0057.jpg', 'assets/images/Pawana/IMG-20251127-WA0058.jpg', 'assets/images/Pawana/IMG-20251127-WA0059.jpg', 'assets/images/Pawana/IMG-20251127-WA0060.jpg'], 0)">
+                        <img src="assets/images/Pawana/IMG-20251127-WA0049.jpg" alt="Pawna Gallery 2"
+                            class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                            onclick="openImageModal(['assets/images/Pawana/IMG-20251127-WA0048.jpg', 'assets/images/Pawana/IMG-20251127-WA0049.jpg', 'assets/images/Pawana/IMG-20251127-WA0050.jpg', 'assets/images/Pawana/IMG-20251127-WA0051.jpg', 'assets/images/Pawana/IMG-20251127-WA0052.jpg', 'assets/images/Pawana/IMG-20251127-WA0053.jpg', 'assets/images/Pawana/IMG-20251127-WA0054.jpg', 'assets/images/Pawana/IMG-20251127-WA0055.jpg', 'assets/images/Pawana/IMG-20251127-WA0056.jpg', 'assets/images/Pawana/IMG-20251127-WA0057.jpg', 'assets/images/Pawana/IMG-20251127-WA0058.jpg', 'assets/images/Pawana/IMG-20251127-WA0059.jpg', 'assets/images/Pawana/IMG-20251127-WA0060.jpg'], 1)">
+                        <img src="assets/images/Pawana/IMG-20251127-WA0050.jpg" alt="Pawna Gallery 3"
+                            class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                            onclick="openImageModal(['assets/images/Pawana/IMG-20251127-WA0048.jpg', 'assets/images/Pawana/IMG-20251127-WA0049.jpg', 'assets/images/Pawana/IMG-20251127-WA0050.jpg', 'assets/images/Pawana/IMG-20251127-WA0051.jpg', 'assets/images/Pawana/IMG-20251127-WA0052.jpg', 'assets/images/Pawana/IMG-20251127-WA0053.jpg', 'assets/images/Pawana/IMG-20251127-WA0054.jpg', 'assets/images/Pawana/IMG-20251127-WA0055.jpg', 'assets/images/Pawana/IMG-20251127-WA0056.jpg', 'assets/images/Pawana/IMG-20251127-WA0057.jpg', 'assets/images/Pawana/IMG-20251127-WA0058.jpg', 'assets/images/Pawana/IMG-20251127-WA0059.jpg', 'assets/images/Pawana/IMG-20251127-WA0060.jpg'], 2)">
+                        <img src="assets/images/Pawana/IMG-20251127-WA0051.jpg" alt="Pawna Gallery 4"
+                            class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                            onclick="openImageModal(['assets/images/Pawana/IMG-20251127-WA0048.jpg', 'assets/images/Pawana/IMG-20251127-WA0049.jpg', 'assets/images/Pawana/IMG-20251127-WA0050.jpg', 'assets/images/Pawana/IMG-20251127-WA0051.jpg', 'assets/images/Pawana/IMG-20251127-WA0052.jpg', 'assets/images/Pawana/IMG-20251127-WA0053.jpg', 'assets/images/Pawana/IMG-20251127-WA0054.jpg', 'assets/images/Pawana/IMG-20251127-WA0055.jpg', 'assets/images/Pawana/IMG-20251127-WA0056.jpg', 'assets/images/Pawana/IMG-20251127-WA0057.jpg', 'assets/images/Pawana/IMG-20251127-WA0058.jpg', 'assets/images/Pawana/IMG-20251127-WA0059.jpg', 'assets/images/Pawana/IMG-20251127-WA0060.jpg'], 3)">
+                        <img src="assets/images/Pawana/IMG-20251127-WA0052.jpg" alt="Pawna Gallery 5"
+                            class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                            onclick="openImageModal(['assets/images/Pawana/IMG-20251127-WA0048.jpg', 'assets/images/Pawana/IMG-20251127-WA0049.jpg', 'assets/images/Pawana/IMG-20251127-WA0050.jpg', 'assets/images/Pawana/IMG-20251127-WA0051.jpg', 'assets/images/Pawana/IMG-20251127-WA0052.jpg', 'assets/images/Pawana/IMG-20251127-WA0053.jpg', 'assets/images/Pawana/IMG-20251127-WA0054.jpg', 'assets/images/Pawana/IMG-20251127-WA0055.jpg', 'assets/images/Pawana/IMG-20251127-WA0056.jpg', 'assets/images/Pawana/IMG-20251127-WA0057.jpg', 'assets/images/Pawana/IMG-20251127-WA0058.jpg', 'assets/images/Pawana/IMG-20251127-WA0059.jpg', 'assets/images/Pawana/IMG-20251127-WA0060.jpg'], 4)">
+                        <img src="assets/images/Pawana/IMG-20251127-WA0053.jpg" alt="Pawna Gallery 6"
+                            class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                            onclick="openImageModal(['assets/images/Pawana/IMG-20251127-WA0048.jpg', 'assets/images/Pawana/IMG-20251127-WA0049.jpg', 'assets/images/Pawana/IMG-20251127-WA0050.jpg', 'assets/images/Pawana/IMG-20251127-WA0051.jpg', 'assets/images/Pawana/IMG-20251127-WA0052.jpg', 'assets/images/Pawana/IMG-20251127-WA0053.jpg', 'assets/images/Pawana/IMG-20251127-WA0054.jpg', 'assets/images/Pawana/IMG-20251127-WA0055.jpg', 'assets/images/Pawana/IMG-20251127-WA0056.jpg', 'assets/images/Pawana/IMG-20251127-WA0057.jpg', 'assets/images/Pawana/IMG-20251127-WA0058.jpg', 'assets/images/Pawana/IMG-20251127-WA0059.jpg', 'assets/images/Pawana/IMG-20251127-WA0060.jpg'], 5)">
+                        <img src="assets/images/Pawana/IMG-20251127-WA0054.jpg" alt="Pawna Gallery 7"
+                            class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                            onclick="openImageModal(['assets/images/Pawana/IMG-20251127-WA0048.jpg', 'assets/images/Pawana/IMG-20251127-WA0049.jpg', 'assets/images/Pawana/IMG-20251127-WA0050.jpg', 'assets/images/Pawana/IMG-20251127-WA0051.jpg', 'assets/images/Pawana/IMG-20251127-WA0052.jpg', 'assets/images/Pawana/IMG-20251127-WA0053.jpg', 'assets/images/Pawana/IMG-20251127-WA0054.jpg', 'assets/images/Pawana/IMG-20251127-WA0055.jpg', 'assets/images/Pawana/IMG-20251127-WA0056.jpg', 'assets/images/Pawana/IMG-20251127-WA0057.jpg', 'assets/images/Pawana/IMG-20251127-WA0058.jpg', 'assets/images/Pawana/IMG-20251127-WA0059.jpg', 'assets/images/Pawana/IMG-20251127-WA0060.jpg'], 6)">
+                        <img src="assets/images/Pawana/IMG-20251127-WA0055.jpg" alt="Pawna Gallery 8"
+                            class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                            onclick="openImageModal(['assets/images/Pawana/IMG-20251127-WA0048.jpg', 'assets/images/Pawana/IMG-20251127-WA0049.jpg', 'assets/images/Pawana/IMG-20251127-WA0050.jpg', 'assets/images/Pawana/IMG-20251127-WA0051.jpg', 'assets/images/Pawana/IMG-20251127-WA0052.jpg', 'assets/images/Pawana/IMG-20251127-WA0053.jpg', 'assets/images/Pawana/IMG-20251127-WA0054.jpg', 'assets/images/Pawana/IMG-20251127-WA0055.jpg', 'assets/images/Pawana/IMG-20251127-WA0056.jpg', 'assets/images/Pawana/IMG-20251127-WA0057.jpg', 'assets/images/Pawana/IMG-20251127-WA0058.jpg', 'assets/images/Pawana/IMG-20251127-WA0059.jpg', 'assets/images/Pawana/IMG-20251127-WA0060.jpg'], 7)">
+                        <img src="assets/images/Pawana/IMG-20251127-WA0056.jpg" alt="Pawna Gallery 9"
+                            class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                            onclick="openImageModal(['assets/images/Pawana/IMG-20251127-WA0048.jpg', 'assets/images/Pawana/IMG-20251127-WA0049.jpg', 'assets/images/Pawana/IMG-20251127-WA0050.jpg', 'assets/images/Pawana/IMG-20251127-WA0051.jpg', 'assets/images/Pawana/IMG-20251127-WA0052.jpg', 'assets/images/Pawana/IMG-20251127-WA0053.jpg', 'assets/images/Pawana/IMG-20251127-WA0054.jpg', 'assets/images/Pawana/IMG-20251127-WA0055.jpg', 'assets/images/Pawana/IMG-20251127-WA0056.jpg', 'assets/images/Pawana/IMG-20251127-WA0057.jpg', 'assets/images/Pawana/IMG-20251127-WA0058.jpg', 'assets/images/Pawana/IMG-20251127-WA0059.jpg', 'assets/images/Pawana/IMG-20251127-WA0060.jpg'], 8)">
+                        <img src="assets/images/Pawana/IMG-20251127-WA0057.jpg" alt="Pawna Gallery 10"
+                            class="w-full h-32 md:h-40 object-cover rounded-xl cursor-pointer hover:opacity-80 hover:scale-105 transition-all shadow-md"
+                            onclick="openImageModal(['assets/images/Pawana/IMG-20251127-WA0048.jpg', 'assets/images/Pawana/IMG-20251127-WA0049.jpg', 'assets/images/Pawana/IMG-20251127-WA0050.jpg', 'assets/images/Pawana/IMG-20251127-WA0051.jpg', 'assets/images/Pawana/IMG-20251127-WA0052.jpg', 'assets/images/Pawana/IMG-20251127-WA0053.jpg', 'assets/images/Pawana/IMG-20251127-WA0054.jpg', 'assets/images/Pawana/IMG-20251127-WA0055.jpg', 'assets/images/Pawana/IMG-20251127-WA0056.jpg', 'assets/images/Pawana/IMG-20251127-WA0057.jpg', 'assets/images/Pawana/IMG-20251127-WA0058.jpg', 'assets/images/Pawana/IMG-20251127-WA0059.jpg', 'assets/images/Pawana/IMG-20251127-WA0060.jpg'], 9)">
+
+                    </div>
+                </div>
+
+                <div class="p-6 md:p-10">
+                    <!-- Location Info -->
+                    <div class="mb-8 text-center">
+                        <p class="text-lg text-gray-600"><strong>Location:</strong> Pawna Lake, Lonavala - 20 kilometers
+                            from Lonavala city center, 110 kilometers from Mumbai city, and 58 kilometers from Pune
+                            city.</p>
+                    </div>
+
+                    <!-- Overview Section -->
+                    <div class="mb-6">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                            <div class="p-6 bg-gray-50">
+                                <h3 class="text-3xl font-bold text-primary mb-6 text-center">Overview</h3>
+                                <p class="text-lg text-gray-700 mb-6 text-center">Pawna lake the most alluring camping
+                                    spot in Lonavala. It is 20 kilometers from Lonavala city center, 110 kilometers from
+                                    Mumbai city, and 58 kilometers from Pune city. We are offering you the best
+                                    experience at Pawna lake camping. We provide a tent stay, unlimited dinner, free
+                                    snacks, and delicious barbecue.</p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rates Section (Collapsible) -->
+                    <div class="mb-6">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                            <button onclick="toggleAccordion('pawna-rates')"
+                                class="accordion-header w-full flex items-center justify-between p-6 text-left bg-gradient-to-r from-primary to-secondary text-white hover:from-secondary hover:to-primary transition-all">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">💰</span>
+                                    <h4 class="text-xl font-bold">Rates</h4>
+                                </div>
+                                <span
+                                    class="accordion-icon text-2xl font-bold transition-transform duration-300">+</span>
+                            </button>
+                            <div id="pawna-rates-content"
+                                class="accordion-content hidden overflow-hidden transition-all duration-300">
+                                <div class="p-6 bg-gray-50">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                                        <div
+                                            class="bg-white border-2 border-gray-200 rounded-xl p-6 text-center hover:border-secondary transition-all shadow-lg">
+                                            <div class="text-2xl mb-3">📅</div>
+                                            <h4 class="text-xl font-bold text-gray-800 mb-2">Weekday</h4>
+                                            <div class="text-4xl font-bold text-secondary mb-2">₹999</div>
+                                            <p class="text-sm text-gray-600">per person</p>
+                                        </div>
+                                        <div
+                                            class="bg-gradient-to-br from-secondary to-accent text-white rounded-xl p-6 text-center shadow-lg transform hover:scale-105 transition-transform">
+                                            <div class="text-2xl mb-3">📅</div>
+                                            <h4 class="text-xl font-bold mb-2">Weekend</h4>
+                                            <div class="text-4xl font-bold mb-2">₹999</div>
+                                            <p class="text-sm opacity-90">per person</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-center text-sm text-gray-500 mt-4">*Rates may vary on holidays,
+                                        festive dates, or seasonal demand.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Camping Itinerary (Collapsible) -->
+                    <div class="mb-6">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                            <button onclick="toggleAccordion('pawna-itinerary')"
+                                class="accordion-header w-full flex items-center justify-between p-6 text-left bg-gradient-to-r from-accent to-green-500 text-white hover:from-green-500 hover:to-accent transition-all">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">🏕️</span>
+                                    <h4 class="text-xl font-bold">Camping Itinerary</h4>
+                                </div>
+                                <span
+                                    class="accordion-icon text-2xl font-bold transition-transform duration-300">+</span>
+                            </button>
+                            <div id="pawna-itinerary-content"
+                                class="accordion-content hidden overflow-hidden transition-all duration-300">
+                                <div class="p-6 bg-gray-50">
+                                    <h3 class="text-3xl font-bold text-primary mb-6 text-center">🏕️ Camping Itinerary
+                                    </h3>
+
+                                    <!-- Day 1 -->
+                                    <div
+                                        class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl mb-6 border-l-4 border-secondary">
+                                        <h4 class="text-2xl font-bold text-secondary mb-6 flex items-center">
+                                            <span class="mr-2">📅</span> Day 1
+                                        </h4>
+                                        <div class="space-y-4">
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">⏰</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">04:00 PM - Check In At
+                                                        Campsite</div>
+                                                    <div class="text-gray-600 text-sm">🏕️</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">🍵</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">06:00 PM - Evening High
+                                                        Tea + Special
+                                                        Misal Paav</div>
+                                                    <div class="text-gray-600 text-sm">☕</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">🌇</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">06:30 PM - Enjoying Sunset
+                                                    </div>
+                                                    <div class="text-gray-600 text-sm">Visiting nearby attractions 🌇
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">🍢</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">08:00 PM - Barbeque
+                                                        Limited</div>
+                                                    <div class="text-gray-600 text-sm">Veg / Non-Veg 🍡</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">🎶</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">08:30 PM - DJ Music & Fun
+                                                        Games</div>
+                                                    <div class="text-gray-600 text-sm">🎵</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">🍱</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">10:00 PM - Unlimited
+                                                        Dinner</div>
+                                                    <div class="text-gray-600 text-sm">Veg / Non-Veg 🍱</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">🎸</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">11:00 PM - Live Music
+                                                    </div>
+                                                    <div class="text-gray-600 text-sm">Weekend Only 🎻</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">🎥</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">12:00 PM - Movie Screening
+                                                    </div>
+                                                    <div class="text-gray-600 text-sm">🎞️</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">⛺</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">Night Stay In Tent</div>
+                                                    <div class="text-gray-600 text-sm">🎪</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Day 2 -->
+                                    <div
+                                        class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border-l-4 border-accent">
+                                        <h4 class="text-2xl font-bold text-accent mb-6 flex items-center">
+                                            <span class="mr-2">📅</span> Day 2
+                                        </h4>
+                                        <div class="space-y-4">
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">🍜</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">08:00 AM - Morning
+                                                        Breakfast</div>
+                                                    <div class="text-gray-600 text-sm">🍛</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-4 bg-white p-4 rounded-lg">
+                                                <div class="text-2xl">🥰</div>
+                                                <div class="flex-1">
+                                                    <div class="font-bold text-gray-800 mb-1">11:00 AM - Checkout</div>
+                                                    <div class="text-gray-600 text-sm">Checkout With Lovely Memory 🥰
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-center text-sm text-gray-500 mt-4 italic">Note: Above mentioned
+                                        timings and amenities are tentative. They may fluctuate or cancelled depending
+                                        on various factors.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Highlights Section -->
+                    <div class="mb-8">
+                        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 border-2 border-gray-200">
+                            <h3 class="text-3xl font-bold text-primary mb-6 text-center">📍 Highlights</h3>
+                            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    <div
+                                        class="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl border-l-4 border-secondary">
+                                        <div class="text-2xl mb-2">🏞️</div>
+                                        <h4 class="font-semibold text-gray-800">Lakeside Camping</h4>
+                                        <p class="text-sm text-gray-600">Camp right by the beautiful Pawna Lake</p>
+                                    </div>
+                                    <div
+                                        class="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-xl border-l-4 border-accent">
+                                        <div class="text-2xl mb-2">🚣</div>
+                                        <h4 class="font-semibold text-gray-800">Boating</h4>
+                                        <p class="text-sm text-gray-600">Enjoy peaceful boat rides on the lake</p>
+                                    </div>
+                                    <div
+                                        class="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-xl border-l-4 border-purple-500">
+                                        <div class="text-2xl mb-2">🏹</div>
+                                        <h4 class="font-semibold text-gray-800">Archery</h4>
+                                        <p class="text-sm text-gray-600">Try your hand at archery</p>
+                                    </div>
+                                    <div
+                                        class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-xl border-l-4 border-orange-500">
+                                        <div class="text-2xl mb-2">🎶</div>
+                                        <h4 class="font-semibold text-gray-800">DJ Music at Night</h4>
+                                        <p class="text-sm text-gray-600">Dance under the stars</p>
+                                    </div>
+                                    <div
+                                        class="bg-gradient-to-br from-pink-50 to-pink-100 p-4 rounded-xl border-l-4 border-pink-500">
+                                        <div class="text-2xl mb-2">🔥</div>
+                                        <h4 class="font-semibold text-gray-800">Bonfire</h4>
+                                        <p class="text-sm text-gray-600">Cozy up around the bonfire</p>
+                                    </div>
+                                    <div
+                                        class="bg-gradient-to-br from-teal-50 to-teal-100 p-4 rounded-xl border-l-4 border-teal-500">
+                                        <div class="text-2xl mb-2">⚽</div>
+                                        <h4 class="font-semibold text-gray-800">Sports Activities</h4>
+                                        <p class="text-sm text-gray-600">Cricket, Volleyball, Football & more</p>
+                                    </div>
+                                    <div
+                                        class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-4 rounded-xl border-l-4 border-indigo-500">
+                                        <div class="text-2xl mb-2">🏸</div>
+                                        <h4 class="font-semibold text-gray-800">Playing Ground</h4>
+                                        <p class="text-sm text-gray-600">Spacious ground for various activities</p>
+                                    </div>
+                                    <div
+                                        class="bg-gradient-to-br from-cyan-50 to-cyan-100 p-4 rounded-xl border-l-4 border-cyan-500">
+                                        <div class="text-2xl mb-2">🚿</div>
+                                        <h4 class="font-semibold text-gray-800">Clean Washrooms</h4>
+                                        <p class="text-sm text-gray-600">Indian & Western facilities</p>
+                                    </div>
+                                    <div
+                                        class="bg-gradient-to-br from-amber-50 to-amber-100 p-4 rounded-xl border-l-4 border-amber-500">
+                                        <div class="text-2xl mb-2">🅿️</div>
+                                        <h4 class="font-semibold text-gray-800">Free Parking</h4>
+                                        <p class="text-sm text-gray-600">Convenient parking space</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amenities Section -->
+                    <div class="mb-8">
+                        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 border-2 border-gray-200">
+                            <h3 class="text-3xl font-bold text-primary mb-6 text-center">✨ Amenities</h3>
+                            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    <div
+                                        class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                        Security
+                                    </div>
+                                    <div
+                                        class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                        Blankets
+                                    </div>
+                                    <div
+                                        class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                        Parking
+                                    </div>
+                                    <div
+                                        class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                        Tent Stay
+                                    </div>
+                                    <div
+                                        class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                        Mineral Water
+                                    </div>
+                                    <div
+                                        class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                        Washroom (Western)
+                                    </div>
+                                    <div
+                                        class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                        First Aid
+                                    </div>
+                                    <div
+                                        class="bg-white p-4 rounded-lg text-center font-medium border-2 border-gray-200 hover:border-accent hover:shadow-md transition-all">
+                                        Playing Ground
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Includes/Excludes Section -->
+                    <div class="mb-8">
+                        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 border-2 border-gray-200">
+                            <h3 class="text-3xl font-bold text-primary mb-6 text-center">✅ Includes / Excludes</h3>
+                            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div class="bg-white p-6 rounded-lg border-2 border-gray-200">
+                                        <h4 class="text-xl font-semibold text-secondary mb-4">✅ What is included in
+                                            cost?</h4>
+
+                                        <div class="mb-6">
+                                            <h5 class="text-lg font-semibold text-gray-800 mb-3">🍽️ Food Includes</h5>
+                                            <ul class="space-y-2">
+                                                <li class="flex items-start"><span
+                                                        class="text-accent mr-2 font-bold">✓</span><span>Welcome Tea +
+                                                        snacks ☕</span>
+                                                </li>
+                                                <li class="flex items-start"><span
+                                                        class="text-accent mr-2 font-bold">✓</span><span>Starter -
+                                                        barbeque (veg/nonveg) limited</span>
+                                                </li>
+                                                <li class="flex items-start"><span
+                                                        class="text-accent mr-2 font-bold">✓</span><span>Unlimited
+                                                        dinner</span>
+                                                </li>
+                                                <li class="flex items-start"><span
+                                                        class="text-accent mr-2 font-bold">✓</span><span><strong>Veg:</strong>
+                                                        mutter paneer, chapati, Dal-tadka rice, sweet</span>
+                                                </li>
+                                                <li class="flex items-start"><span
+                                                        class="text-accent mr-2 font-bold">✓</span><span><strong>Non-veg:</strong>
+                                                        chicken curry, chapati, rice, salad</span>
+                                                </li>
+                                                <li class="flex items-start"><span
+                                                        class="text-accent mr-2 font-bold">✓</span><span><strong>Next
+                                                            day:</strong> Breakfast Tea & poha</span>
+                                                </li>
+                                                <li class="flex items-start"><span
+                                                        class="text-accent mr-2 font-bold">✓</span><span><strong>JAIN
+                                                            FOOD AVAILABLE</strong></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                    <div class="bg-white p-6 rounded-lg border-2 border-gray-200">
+                                        <h4 class="text-xl font-semibold text-red-600 mb-4">❌ What is not included in
+                                            cost?</h4>
+                                        <ul class="space-y-2">
+                                            <li class="flex items-start"><span
+                                                    class="text-red-500 mr-2 font-bold">✗</span><span>Transport
+                                                    facility</span>
+                                            </li>
+                                            <li class="flex items-start"><span
+                                                    class="text-red-500 mr-2 font-bold">✗</span><span>All kinds of Extra
+                                                    Meals / Drinks Ordered</span>
+                                            </li>
+                                            <li class="flex items-start"><span
+                                                    class="text-red-500 mr-2 font-bold">✗</span><span>Personal
+                                                    expenses</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-primary to-secondary text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Contact Us</h2>
+                <p class="text-xl opacity-90">Book your adventure today!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div
+                    class="bg-white bg-opacity-10 backdrop-blur-lg p-8 rounded-xl text-center hover:transform hover:-translate-y-2 transition-all">
+                    <div class="text-5xl mb-4">📞</div>
+                    <h3 class="text-2xl font-semibold mb-4">Phone Numbers</h3>
+                    <div class="flex flex-col space-y-2">
+                        <a href="tel:7276778395"
+                            class="text-xl font-semibold hover:text-yellow-300 transition-colors">7276778395</a>
+                        <a href="tel:8446130788"
+                            class="text-xl font-semibold hover:text-yellow-300 transition-colors">8446130788</a>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-white bg-opacity-10 backdrop-blur-lg p-8 rounded-xl text-center hover:transform hover:-translate-y-2 transition-all">
+                    <div class="text-5xl mb-4">💳</div>
+                    <h3 class="text-2xl font-semibold mb-4">Payment Details</h3>
+                    <div class="text-left space-y-2">
+                        <p><strong>GPay:</strong> 8446130788</p>
+                        <p><strong>Name:</strong> Navlesh Shelar</p>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-yellow-300 bg-opacity-20 backdrop-blur-lg p-8 rounded-xl text-center border-2 border-yellow-300 border-opacity-50 hover:transform hover:-translate-y-2 transition-all">
+                    <div class="text-5xl mb-4">🏕️</div>
+                    <h3 class="text-2xl font-semibold mb-4">Book Now</h3>
+                    <p class="mb-6">Call us or WhatsApp to book your camping experience</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="tel:7276778395"
+                            class="bg-white text-secondary font-semibold py-3 px-6 rounded-full hover:bg-gray-100 transition-all shadow-lg">Call
+                            Now</a>
+                        <a href="https://wa.me/917276778395"
+                            class="bg-accent text-white font-semibold py-3 px-6 rounded-full hover:bg-green-600 transition-all shadow-lg"
+                            target="_blank">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center mb-6">
+                <img src="assets/images/logo.png" alt="Trekking Trails Logo"
+                    class="h-16 w-16 object-contain mb-4 rounded">
+                <h3 class="text-xl font-bold mb-2">Trekking Trails</h3>
+            </div>
+            <div class="text-center">
+                <p class="mb-2">&copy; 2024 Trekking Trails. All rights reserved.</p>
+                <p class="text-gray-400">Experience the best beachside camping in Maharashtra</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Social Media Buttons -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-4">
+        <!-- WhatsApp Button -->
+        <a href="https://wa.me/917276778395" target="_blank"
+            class="bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 group">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+            </svg>
+            <span
+                class="absolute right-full mr-3 px-3 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">WhatsApp
+                Us</span>
+        </a>
+
+        <!-- Instagram Button -->
+        <a href="https://www.instagram.com/trekking_trails?igsh=MTE1b3F2aW9ldnRlYw==" target="_blank"
+            class="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 group">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+            <span
+                class="absolute right-full mr-3 px-3 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Follow
+                Us</span>
+        </a>
+    </div>
+
+    <script src="assets/js/main.js"></script>
 </body>
 
 </html>
