@@ -144,6 +144,42 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('active');
         });
     });
+    
+    // Contact Form Submission
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Create WhatsApp message
+            const whatsappMessage = `Hello! I'm interested in booking a camping experience.\n\nName: ${name}\nPhone: ${phone}${email ? `\nEmail: ${email}` : ''}\nMessage: ${message}`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappUrl = `https://wa.me/917276778395?text=${encodedMessage}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Show success message
+            formMessage.classList.remove('hidden', 'bg-red-500', 'bg-opacity-20');
+            formMessage.classList.add('bg-green-500', 'bg-opacity-20', 'border', 'border-green-300', 'border-opacity-50');
+            formMessage.innerHTML = '<p class="text-white font-semibold">✓ Message sent! We will contact you soon.</p>';
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                formMessage.classList.add('hidden');
+            }, 5000);
+        });
+    }
 });
 
 // Animate elements on scroll using Intersection Observer
